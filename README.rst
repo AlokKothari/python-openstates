@@ -18,7 +18,7 @@ Requirements
 
 python >= 2.4
 
-simplejson >= 1.8 (will use builtin json module instead on python >= 2.6)
+remoteobjects >= 1.1
 
 Installation
 ============
