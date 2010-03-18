@@ -25,7 +25,7 @@ class FiftystatesObject(RemoteObject):
         url = "%s%s/?%s" % (FIFTYSTATES_URL, func,
                             urllib.urlencode(params))
         return super(FiftystatesObject, cls).get(url)
-    
+
 class Session(FiftystatesObject):
     start_year = fields.Field()
     end_year = fields.Field()
@@ -95,7 +95,7 @@ def ListOf(cls):
     class List(ListObject, FiftystatesObject):
         entries = fields.List(fields.Object(cls))
     return List
-    
+
 class Bill(FiftystatesObject):
     title = fields.Field()
     state = fields.Field()
@@ -123,15 +123,17 @@ class Bill(FiftystatesObject):
 
 class Role(FiftystatesObject):
     state = fields.Field()
+    role = fields.Field()
     session = fields.Field()
     chamber = fields.Field()
     district = fields.Field()
+    committee = fields.Field()
     contact_info = fields.List(fields.Dict(fields.Field()))
 
     def __str__(self):
         return '%s %s %s district %s' % (self.state, self.chamber,
                                          self.session, self.district)
-    
+
 class Legislator(FiftystatesObject):
     leg_id = fields.Field()
     full_name = fields.Field()
@@ -153,7 +155,7 @@ class Legislator(FiftystatesObject):
 
     def __str__(self):
         return self.full_name
-    
+
 class District(FiftystatesObject):
     state = fields.Field()
     session = fields.Field()
