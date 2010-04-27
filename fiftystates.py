@@ -18,6 +18,13 @@ FIFTYSTATES_URL = "http://fiftystates-dev.sunlightlabs.com/api/"
 class FiftystatesDatetime(fields.Datetime):
     dateformat = '%Y-%m-%d %H:%M:%S'
 
+    # None value for datetimes is fixed in trunk remoteobjects,
+    # but broken on 1.1 release
+    def decode(self, value):
+        if value is None:
+            return None
+        return super(FiftystatesDatetime, self).decode(value)
+
 class FiftystatesObject(RemoteObject):
     @classmethod
     def get(cls, func, params={}):
@@ -129,6 +136,8 @@ class Role(FiftystatesObject):
     district = fields.Field()
     committee = fields.Field()
     contact_info = fields.List(fields.Dict(fields.Field()))
+    start_date = FiftystatesDatetime()
+    end_date = FiftystatesDatetime()
 
     def __str__(self):
         return '%s %s %s district %s' % (self.state, self.chamber,
