@@ -15,6 +15,9 @@ import urllib
 
 FIFTYSTATES_URL = "http://fiftystates-dev.sunlightlabs.com/api/"
 
+API_KEY = ''
+
+
 class FiftystatesDatetime(fields.Datetime):
     dateformat = '%Y-%m-%d %H:%M:%S'
 
@@ -25,10 +28,12 @@ class FiftystatesDatetime(fields.Datetime):
             return None
         return super(FiftystatesDatetime, self).decode(value)
 
+
 class FiftystatesObject(RemoteObject):
     @classmethod
     def get(cls, func, params={}):
         params['format'] = 'json'
+        params['apikey'] = API_KEY
         url = "%s%s/?%s" % (FIFTYSTATES_URL, func,
                             urllib.urlencode(params))
         return super(FiftystatesObject, cls).get(url)

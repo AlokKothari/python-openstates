@@ -30,9 +30,12 @@ To install run
 Usage
 =====
 
+Firs visit http://services.sunlightlabs.com/ to get an API key.
+
 Grab state metadata:
 
     >>> import fiftystates
+    >>> fiftystates.API_KEY = 'YOUR_API_KEY_HERE'
     >>> ca = fiftystates.State.get('ca')
     >>> print ca.name
     California
