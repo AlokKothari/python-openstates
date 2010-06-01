@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-from distutils.core import setup
-from fiftystates import __version__
+from setuptools import setup
+from fiftystates.client import __version__
 
 long_description = open('README.rst').read()
 
 setup(name="python-fiftystates",
       version=__version__,
-      py_modules=["fiftystates"],
+      py_modules=['fiftystates.client'],
+      namespace_packages=['fiftystates'],
       description="Library for interacting with the Fifty State Project API",
       author="Michael Stephens",
       author_email="mstephens@sunlightfoundation.com",
