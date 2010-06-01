@@ -4,11 +4,10 @@ The Fifty State Project provides data on state legislative activities,
 including bill summaries, votes, sponsorships and state legislator
 information.
 """
-
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
-__copyright__ = "Copyright (c) 2009 Sunlight Labs"
+__copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.1"
+__version__ = "0.2"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
@@ -38,6 +37,7 @@ class FiftystatesObject(RemoteObject):
                             urllib.urlencode(params))
         return super(FiftystatesObject, cls).get(url)
 
+
 class Session(FiftystatesObject):
     start_year = fields.Field()
     end_year = fields.Field()
@@ -45,6 +45,7 @@ class Session(FiftystatesObject):
 
     def __str__(self):
         return self.name
+
 
 class State(FiftystatesObject):
     name = fields.Field()
@@ -65,6 +66,7 @@ class State(FiftystatesObject):
     def __str__(self):
         return self.name
 
+
 class Action(FiftystatesObject):
     date = FiftystatesDatetime()
     actor = fields.Field()
@@ -73,6 +75,7 @@ class Action(FiftystatesObject):
     def __str__(self):
         return '%s: %s' % (self.actor, self.action)
 
+
 class Sponsor(FiftystatesObject):
     leg_id = fields.Field()
     full_name = fields.Field()
@@ -80,6 +83,7 @@ class Sponsor(FiftystatesObject):
 
     def __str__(self):
         return self.full_name
+
 
 class Vote(FiftystatesObject):
     vote_id = fields.Field()
@@ -99,14 +103,17 @@ class Vote(FiftystatesObject):
     def __str__(self):
         return "Vote on '%s'" % self.motion
 
+
 class Version(FiftystatesObject):
     url = fields.Field()
     name = fields.Field()
+
 
 def ListOf(cls):
     class List(ListObject, FiftystatesObject):
         entries = fields.List(fields.Object(cls))
     return List
+
 
 class Bill(FiftystatesObject):
     title = fields.Field()
@@ -133,6 +140,7 @@ class Bill(FiftystatesObject):
     def __str__(self):
         return '%s: %s' % (self.bill_id, self.title)
 
+
 class Role(FiftystatesObject):
     state = fields.Field()
     role = fields.Field()
@@ -147,6 +155,7 @@ class Role(FiftystatesObject):
     def __str__(self):
         return '%s %s %s district %s' % (self.state, self.chamber,
                                          self.session, self.district)
+
 
 class Legislator(FiftystatesObject):
     leg_id = fields.Field()
@@ -169,6 +178,7 @@ class Legislator(FiftystatesObject):
 
     def __str__(self):
         return self.full_name
+
 
 class District(FiftystatesObject):
     state = fields.Field()
