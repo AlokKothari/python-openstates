@@ -151,6 +151,7 @@ class Role(FiftystatesObject):
     contact_info = fields.List(fields.Dict(fields.Field()))
     start_date = FiftystatesDatetime()
     end_date = FiftystatesDatetime()
+    party = fields.Field()
 
     def __str__(self):
         return '%s %s %s district %s' % (self.state, self.chamber,
@@ -169,7 +170,7 @@ class Legislator(FiftystatesObject):
 
     @classmethod
     def get(cls, id):
-        func = 'legislator/%d' % id
+        func = 'legislators/%s' % id
         return super(Legislator, cls).get(func)
 
     @classmethod
