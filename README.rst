@@ -23,9 +23,10 @@ remoteobjects >= 1.1
 Installation
 ============
 
-To install run
+python-opentstates is available on PyPI and so it can most easily be
+installed via ``pip install python-openstates`` or ``easy_install python-openstates``.
 
-    ``python setup.py install``
+To install from a source distribution, run ``python setup.py install``.
 
 Usage
 =====
