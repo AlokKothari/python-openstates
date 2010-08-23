@@ -179,24 +179,11 @@ class Legislator(OpenStateObject):
     def search(cls, **kwargs):
         return ListOf(cls).get('legislators', kwargs).entries
 
+    @classmethod
+    def geo(cls, lat, long):
+        func = 'legislators/geo'
+        params = dict(lat=lat, long=long)
+        return ListOf(cls).get(func, params).entries
+
     def __str__(self):
         return self.full_name
-
-
-class District(OpenStateObject):
-    state = fields.Field()
-    session = fields.Field()
-    chamber = fields.Field()
-    name = fields.Field()
-    legislators = fields.List(fields.Object(Legislator))
-
-    @classmethod
-    def get(cls, state, session, chamber, district):
-        func = '%s/%s/%s/districts/%s' % (state, session, chamber, district)
-        return super(District, cls).get(func)
-
-    @classmethod
-    def geo(cls, state, session, chamber, lat, long):
-        func = '%s/%s/%s/districts/geo' % (state, session, chamber)
-        params = {'lat': lat, 'long': long}
-        return super(District, cls).get(func, params)
