@@ -105,19 +105,8 @@ View a bill's votes:
     >>> print vote.yes_count, vote.no_count, vote.other_count
     9 0 0
 
-Lookup a legislative district:
+Lookup legislators by latitude and longitude:
 
-    >>> district = openstates.District.get('ny', '2009-2010', 'lower', '106')
-    >>> print district.legislators[0].full_name
-    Ronald J. Canestrari
-
-Lookup a district by latitude and longitude:
-
-    >>> district_geo = openstates.District.geo('ny', '2009-2010', 'lower', -73.675451, 42.737498)
-    >>> district.name == district_geo.name
-    True
-
-Get contact info for legislators:
-
-    >>> print district.legislators[0].roles[0].contact_info[0].phone
-    518-455-4474
+    >>> legislators = openstates.Legislator.geo(-73.675451, 42.737498)
+    >>> print legislators[0].full_name
+    Roy J. McDonald
