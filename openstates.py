@@ -135,11 +135,29 @@ class Bill(OpenStateObject):
 
     @classmethod
     def get(cls, state, session, chamber, bill_id):
+        """
+        Get a specific bill.
+
+        :param state: the two-letter abbreviation of the originating state
+        :param session: the session identifier for the bill (see the state's
+          metadata for legal values)
+        :param chamber: which legislative chamber the bill originated in
+          ('upper' or 'lower')
+        :param bill_id: the bill's ID as assigned by the state
+        """
         func = "bills/%s/%s/%s/%s" % (state, session, chamber, bill_id)
         return super(Bill, cls).get(func)
 
     @classmethod
     def search(cls, query, **kwargs):
+        """
+        Search bills.
+
+        :param query: a query string which will be used to search bill titles
+
+        Any additional keyword arguments will be used to further filter the
+        results.
+        """
         kwargs['q'] = query
         func = 'bills'
         return ListOf(cls).get(func, kwargs).entries
@@ -178,15 +196,32 @@ class Legislator(OpenStateObject):
 
     @classmethod
     def get(cls, id):
+        """
+        Get a specific legislator.
+
+        :param id: the legislator's Open State ID (e.g. 'TXL000139')
+        """
         func = 'legislators/%s' % id
         return super(Legislator, cls).get(func)
 
     @classmethod
     def search(cls, **kwargs):
+        """
+        Search legislators.
+
+        Use keyword arguments to filter by legislators fields.
+        For example, `openstates.Legislator.search(last_name='Alesi')`.
+        """
         return ListOf(cls).get('legislators', kwargs).entries
 
     @classmethod
     def geo(cls, lat, long):
+        """
+        Get all state legislators for a given lat/long pair
+
+        :param lat: the latitude
+        :param long: the longitude
+        """
         func = 'legislators/geo'
         params = dict(lat=lat, long=long)
         return ListOf(cls).get(func, params).entries
