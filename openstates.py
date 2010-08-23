@@ -12,7 +12,7 @@ __version__ = "0.3"
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
 
-OPENSTATES_URL = "http://openstates.sunlightlabs.com/api/"
+OPENSTATES_URL = "http://openstates.sunlightlabs.com/api/v1/"
 
 API_KEY = ''
 
@@ -129,13 +129,13 @@ class Bill(OpenStateObject):
 
     @classmethod
     def get(cls, state, session, chamber, bill_id):
-        func = "%s/%s/%s/bills/%s" % (state, session, chamber, bill_id)
+        func = "bills/%s/%s/%s/%s" % (state, session, chamber, bill_id)
         return super(Bill, cls).get(func)
 
     @classmethod
     def search(cls, query, **kwargs):
         kwargs['q'] = query
-        func = 'bills/search'
+        func = 'bills'
         return ListOf(cls).get(func, kwargs).entries
 
     def __str__(self):
