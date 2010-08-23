@@ -42,8 +42,10 @@ Grab state metadata:
     California
     >>> print ca.lower_chamber_name
     Assembly
-    >>> for session in ca.terms:
+    >>> for term in ca.terms:
     ...     print term.name
+    ...     for session in term.sessions:
+    ...         print "Session: %s" % session
     20092010
 
 Lookup legislators by name:

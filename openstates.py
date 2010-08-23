@@ -7,7 +7,7 @@ information.
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.3"
+__version__ = "0.3.1"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
@@ -62,7 +62,12 @@ class State(OpenStateObject):
 
     @classmethod
     def get(cls, abbrev):
-        return super(State, cls).get(abbrev)
+        """
+        Get metadata about a state.
+
+        :param abbrev: the state's two-letter abbreviation.
+        """
+        return super(State, cls).get('metadata/%s' % abbrev)
 
     def __str__(self):
         return self.name
