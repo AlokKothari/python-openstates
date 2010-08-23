@@ -1,17 +1,17 @@
 ==================
-python-fiftystates
+python-openstates
 ==================
 
-Python library for interacting with the Fifty State Project API.
+Python library for interacting with the Open State Project API.
 
-The Fifty State Project provides data on state legislative activities,
+The Open State Project provides data on state legislative activities,
 including bill summaries, votes, sponsorships and state legislator
 information.
 
-python-fiftystates is a project of Sunlight Labs (c) 2009.
+python-openstates is a project of Sunlight Labs (c) 2010.
 Written by Michael Stephens <mstephens@sunlightfoundation.com>.
 
-Source: http://github.com/sunlightlabs/python-fiftystates
+Source: http://github.com/sunlightlabs/python-openstates
 
 Requirements
 ============
@@ -34,9 +34,9 @@ An API key can be obtained at http://services.sunlightlabs.com/.
 
 Grab state metadata:
 
-    >>> import fiftystates
-    >>> fiftystates.API_KEY = 'YOUR_API_KEY_HERE'
-    >>> ca = fiftystates.State.get('ca')
+    >>> import openstates
+    >>> openstates.API_KEY = 'YOUR_API_KEY_HERE'
+    >>> ca = openstates.State.get('ca')
     >>> print ca.name
     California
     >>> print ca.lower_chamber_name
@@ -54,7 +54,7 @@ Grab state metadata:
 
 Lookup legislators by name:
 
-    >>> mikes = fiftystates.Legislator.search(state='ca', first_name='Mike')
+    >>> mikes = openstates.Legislator.search(state='ca', first_name='Mike')
     >>> for mike in mikes:
     ...     print mike.full_name
     Duvall, Mike D.
@@ -64,7 +64,7 @@ Lookup legislators by name:
 
 Lookup legislators by name and party:
 
-    >>> dem_mikes = fiftystates.Legislator.search(state='ca',
+    >>> dem_mikes = openstates.Legislator.search(state='ca',
     ... party='Democrat', first_name='Mike')
     >>> for mike in dem_mikes:
     ...     print mike.full_name
@@ -74,7 +74,7 @@ Lookup legislators by name and party:
 
 Search bills:
 
-    >>> bills = fiftystates.Bill.search('agriculture', state='vt')[0:3]
+    >>> bills = openstates.Bill.search('agriculture', state='vt')[0:3]
     >>> for bill in bills:
     ...     print "%s %s %s" % (bill.state, bill.bill_id, bill.title)
     vt H.0193 AN ACT RELATING TO THE ADDITION OF THE SECRETARY OF AGRICULTURE, FOOD AND MARKETS TO THE BOARD OF TRUSTEES OF THE UNIVERSITY OF VERMONT AND STATE AGRICULTURAL COLLEGE
@@ -83,7 +83,7 @@ Search bills:
 
 Grab information about a specific bill:
 
-    >>> bill = fiftystates.Bill.get('ca', '20092010', 'lower', 'AB20')
+    >>> bill = openstates.Bill.get('ca', '20092010', 'lower', 'AB20')
     >>> print bill.title
     An act to add Chapter 14.27 (commencing with Section 67325) to Part 40 of Division 5 of Title 3 of the Education Code, relating to public postsecondary education.
 
@@ -114,13 +114,13 @@ View a bill's votes:
 
 Lookup a legislative district:
 
-    >>> district = fiftystates.District.get('ny', '2009-2010', 'lower', '106')
+    >>> district = openstates.District.get('ny', '2009-2010', 'lower', '106')
     >>> print district.legislators[0].full_name
     Ronald J. Canestrari
 
 Lookup a district by latitude and longitude:
 
-    >>> district_geo = fiftystates.District.geo('ny', '2009-2010', 'lower', -73.675451, 42.737498)
+    >>> district_geo = openstates.District.geo('ny', '2009-2010', 'lower', -73.675451, 42.737498)
     >>> district.name == district_geo.name
     True
 
