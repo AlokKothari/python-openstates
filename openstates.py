@@ -233,3 +233,37 @@ class Legislator(OpenStateObject):
 
     def __str__(self):
         return self.full_name
+
+
+class CommitteeMember(OpenStateObject):
+    leg_id = fields.Field()
+    role = fields.Field()
+    name = fields.Field('legislator')
+
+class Committee(OpenStateObject):
+    id = fields.Field()
+    state = fields.Field()
+    chamber = fields.Field()
+    committee = fields.Field()
+    subcommittee = fields.Field()
+    members = fields.List(fields.Object(CommitteeMember))
+
+    @classmethod
+    def get(cls, id):
+        """
+        Get a committee.
+
+        :param id: the committee's Open State ID (e.g. CAC000005)
+        """
+        func = 'committees/%s' % id
+        return super(Committee, cls).get(func)
+
+    @classmethod
+    def search(cls, **kwargs):
+        """
+        Search comittees.
+
+        Use keyword argmunents to filter by committee fields.
+        For example, ``openstates.Committee.search(state='ca')``.
+        """
+        return ListOf(cls).get('committees', kwargs).entries
