@@ -177,7 +177,7 @@ class Legislator(OpenStateObject):
 
     @classmethod
     def search(cls, **kwargs):
-        return ListOf(cls).get('legislators/search', kwargs).entries
+        return ListOf(cls).get('legislators', kwargs).entries
 
     def __str__(self):
         return self.full_name
