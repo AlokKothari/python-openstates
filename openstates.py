@@ -96,11 +96,6 @@ class Vote(OpenStateObject):
     other_count = fields.Field()
     passed = fields.Field()
 
-    @classmethod
-    def get(cls, id):
-        func = 'vote/%d' % id
-        return super(Vote, cls).get(func)
-
     def __str__(self):
         return "Vote on '%s'" % self.motion
 
