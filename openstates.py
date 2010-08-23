@@ -102,6 +102,7 @@ class Vote(OpenStateObject):
     no_count = fields.Field()
     other_count = fields.Field()
     passed = fields.Field()
+    type = fields.Field()
     yes_votes = fields.List(fields.Object(SpecificVote))
     no_votes = fields.List(fields.Object(SpecificVote))
     other_votes = fields.List(fields.Object(SpecificVote))
