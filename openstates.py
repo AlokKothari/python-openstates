@@ -79,15 +79,22 @@ class Action(OpenStateObject):
 
 class Sponsor(OpenStateObject):
     leg_id = fields.Field()
-    full_name = fields.Field()
+    name = fields.Field()
     type = fields.Field()
 
     def __str__(self):
         return self.full_name
 
 
+class SpecificVote(OpenStateObject):
+    leg_id = fields.Field()
+    name = fields.Field()
+
+    def __str__(self):
+        return "%s <%s>" % (self.name, self.leg_id)
+
+
 class Vote(OpenStateObject):
-    vote_id = fields.Field()
     date = OpenStateDatetime()
     chamber = fields.Field()
     motion = fields.Field()
@@ -95,6 +102,9 @@ class Vote(OpenStateObject):
     no_count = fields.Field()
     other_count = fields.Field()
     passed = fields.Field()
+    yes_votes = fields.List(fields.Object(SpecificVote))
+    no_votes = fields.List(fields.Object(SpecificVote))
+    other_votes = fields.List(fields.Object(SpecificVote))
 
     def __str__(self):
         return "Vote on '%s'" % self.motion
