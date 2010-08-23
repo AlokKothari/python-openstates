@@ -38,10 +38,11 @@ class OpenStateObject(RemoteObject):
         return super(OpenStateObject, cls).get(url)
 
 
-class Session(OpenStateObject):
+class Term(OpenStateObject):
     start_year = fields.Field()
     end_year = fields.Field()
     name = fields.Field()
+    sessions = fields.List(fields.Field())
 
     def __str__(self):
         return self.name
@@ -57,7 +58,7 @@ class State(OpenStateObject):
     lower_chamber_term = fields.Field()
     upper_chamber_title = fields.Field()
     lower_chamber_title = fields.Field()
-    sessions = fields.List(fields.Object(Session))
+    terms = fields.List(fields.Object(Term))
 
     @classmethod
     def get(cls, abbrev):
