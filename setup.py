@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 from setuptools import setup
-from fiftystates.client import __version__
+from openstates import __version__
 
 long_description = open('README.rst').read()
 
-setup(name="python-fiftystates",
+setup(name="python-openstates",
       version=__version__,
-      py_modules=['fiftystates.client'],
-      namespace_packages=['fiftystates'],
+      py_modules=['openstates'],
       description="Library for interacting with the Fifty State Project API",
       author="Michael Stephens",
       author_email="mstephens@sunlightfoundation.com",
       license="BSD",
-      url="http://github.com/sunlightlabs/python-fiftystates",
+      url="http://github.com/sunlightlabs/python-openstates",
       long_description=long_description,
       platforms=["any"],
       classifiers=["Development Status :: 4 - Beta",
