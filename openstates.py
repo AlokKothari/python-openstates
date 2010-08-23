@@ -1,23 +1,23 @@
-"""Python library for interacting with the Fifty State Project API.
+"""Python library for interacting with the Open State Project API.
 
-The Fifty State Project provides data on state legislative activities,
+The Open State Project provides data on state legislative activities,
 including bill summaries, votes, sponsorships and state legislator
 information.
 """
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.2"
+__version__ = "0.3"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
 
-FIFTYSTATES_URL = "http://fiftystates-dev.sunlightlabs.com/api/"
+OPENSTATES_URL = "http://openstates.sunlightlabs.com/api/"
 
 API_KEY = ''
 
 
-class FiftystatesDatetime(fields.Datetime):
+class OpenStateDatetime(fields.Datetime):
     dateformat = '%Y-%m-%d %H:%M:%S'
 
     # None value for datetimes is fixed in trunk remoteobjects,
@@ -25,20 +25,20 @@ class FiftystatesDatetime(fields.Datetime):
     def decode(self, value):
         if value is None:
             return None
-        return super(FiftystatesDatetime, self).decode(value)
+        return super(OpenStateDatetime, self).decode(value)
 
 
-class FiftystatesObject(RemoteObject):
+class OpenStateObject(RemoteObject):
     @classmethod
     def get(cls, func, params={}):
         params['format'] = 'json'
         params['apikey'] = API_KEY
-        url = "%s%s/?%s" % (FIFTYSTATES_URL, func,
+        url = "%s%s/?%s" % (OPENSTATES_URL, func,
                             urllib.urlencode(params))
-        return super(FiftystatesObject, cls).get(url)
+        return super(OpenStateObject, cls).get(url)
 
 
-class Session(FiftystatesObject):
+class Session(OpenStateObject):
     start_year = fields.Field()
     end_year = fields.Field()
     name = fields.Field()
@@ -47,7 +47,7 @@ class Session(FiftystatesObject):
         return self.name
 
 
-class State(FiftystatesObject):
+class State(OpenStateObject):
     name = fields.Field()
     abbreviation = fields.Field()
     legislature_name = fields.Field()
@@ -67,8 +67,8 @@ class State(FiftystatesObject):
         return self.name
 
 
-class Action(FiftystatesObject):
-    date = FiftystatesDatetime()
+class Action(OpenStateObject):
+    date = OpenStateDatetime()
     actor = fields.Field()
     action = fields.Field()
 
@@ -76,7 +76,7 @@ class Action(FiftystatesObject):
         return '%s: %s' % (self.actor, self.action)
 
 
-class Sponsor(FiftystatesObject):
+class Sponsor(OpenStateObject):
     leg_id = fields.Field()
     full_name = fields.Field()
     type = fields.Field()
@@ -85,9 +85,9 @@ class Sponsor(FiftystatesObject):
         return self.full_name
 
 
-class Vote(FiftystatesObject):
+class Vote(OpenStateObject):
     vote_id = fields.Field()
-    date = FiftystatesDatetime()
+    date = OpenStateDatetime()
     chamber = fields.Field()
     motion = fields.Field()
     yes_count = fields.Field()
@@ -104,18 +104,18 @@ class Vote(FiftystatesObject):
         return "Vote on '%s'" % self.motion
 
 
-class Version(FiftystatesObject):
+class Version(OpenStateObject):
     url = fields.Field()
     name = fields.Field()
 
 
 def ListOf(cls):
-    class List(ListObject, FiftystatesObject):
+    class List(ListObject, OpenStateObject):
         entries = fields.List(fields.Object(cls))
     return List
 
 
-class Bill(FiftystatesObject):
+class Bill(OpenStateObject):
     title = fields.Field()
     state = fields.Field()
     session = fields.Field()
@@ -141,7 +141,7 @@ class Bill(FiftystatesObject):
         return '%s: %s' % (self.bill_id, self.title)
 
 
-class Role(FiftystatesObject):
+class Role(OpenStateObject):
     state = fields.Field()
     role = fields.Field()
     session = fields.Field()
@@ -149,8 +149,8 @@ class Role(FiftystatesObject):
     district = fields.Field()
     committee = fields.Field()
     contact_info = fields.List(fields.Dict(fields.Field()))
-    start_date = FiftystatesDatetime()
-    end_date = FiftystatesDatetime()
+    start_date = OpenStateDatetime()
+    end_date = OpenStateDatetime()
     party = fields.Field()
 
     def __str__(self):
@@ -158,7 +158,7 @@ class Role(FiftystatesObject):
                                          self.session, self.district)
 
 
-class Legislator(FiftystatesObject):
+class Legislator(OpenStateObject):
     leg_id = fields.Field()
     full_name = fields.Field()
     first_name = fields.Field()
@@ -167,6 +167,7 @@ class Legislator(FiftystatesObject):
     suffix = fields.Field()
     party = fields.Field()
     roles = fields.List(fields.Object(Role))
+    votesmart_id = fields.Field()
 
     @classmethod
     def get(cls, id):
@@ -181,7 +182,7 @@ class Legislator(FiftystatesObject):
         return self.full_name
 
 
-class District(FiftystatesObject):
+class District(OpenStateObject):
     state = fields.Field()
     session = fields.Field()
     chamber = fields.Field()
