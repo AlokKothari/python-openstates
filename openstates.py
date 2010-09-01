@@ -103,6 +103,7 @@ class SpecificVote(OpenStateObject):
 class Vote(OpenStateObject):
     date = OpenStateDatetime()
     chamber = fields.Field()
+    committee = fields.Field()
     motion = fields.Field()
     yes_count = fields.Field()
     no_count = fields.Field()
