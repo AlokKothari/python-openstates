@@ -86,6 +86,7 @@ class Sponsor(OpenStateObject):
     leg_id = fields.Field()
     name = fields.Field()
     type = fields.Field()
+    chamber = fields.Field()
 
     def __str__(self):
         return self.full_name
