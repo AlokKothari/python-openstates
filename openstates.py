@@ -7,7 +7,7 @@ information.
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib

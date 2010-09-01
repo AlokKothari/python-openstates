@@ -86,7 +86,7 @@ Grab information about a specific bill:
 List a bill's sponsors:
 
     >>> for sponsor in bill.sponsors:
-    ...    print sponsor.full_name
+    ...    print sponsor.name
     Torlakson, Tom
     Portantino, Anthony
     Block, Marty
