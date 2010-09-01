@@ -181,7 +181,6 @@ class Role(OpenStateObject):
     chamber = fields.Field()
     district = fields.Field()
     committee = fields.Field()
-    contact_info = fields.List(fields.Dict(fields.Field()))
     start_date = OpenStateDatetime()
     end_date = OpenStateDatetime()
     party = fields.Field()
