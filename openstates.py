@@ -137,6 +137,7 @@ class Bill(OpenStateObject):
     sponsors = fields.List(fields.Object(Sponsor))
     votes = fields.List(fields.Object(Vote))
     versions = fields.List(fields.Object(Version))
+    alternate_titles = fields.List(fields.Field())
 
     @classmethod
     def get(cls, state, session, chamber, bill_id):
