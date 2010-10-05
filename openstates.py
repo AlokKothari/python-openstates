@@ -7,7 +7,7 @@ information.
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.3.3"
+__version__ = "0.4.0"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
@@ -16,6 +16,7 @@ OPENSTATES_URL = "http://openstates.sunlightlabs.com/api/v1/"
 
 API_KEY = ''
 
+# utility classes
 
 class OpenStateDatetime(fields.Datetime):
     dateformat = '%Y-%m-%d %H:%M:%S'
@@ -36,6 +37,20 @@ class OpenStateObject(RemoteObject):
         url = "%s%s/?%s" % (OPENSTATES_URL, func,
                             urllib.urlencode(params))
         return super(OpenStateObject, cls).get(url)
+
+
+def ListOf(cls):
+    class List(ListObject, OpenStateObject):
+        entries = fields.List(fields.Object(cls))
+    return List
+
+
+class Source(OpenStateObject):
+    url = fields.Field()
+    retrieved = OpenStateDatetime()
+
+
+## Metadata
 
 
 class Term(OpenStateObject):
@@ -72,6 +87,8 @@ class State(OpenStateObject):
     def __str__(self):
         return self.name
 
+
+## Bills
 
 class Action(OpenStateObject):
     date = OpenStateDatetime()
@@ -122,11 +139,9 @@ class Version(OpenStateObject):
     url = fields.Field()
     name = fields.Field()
 
-
-def ListOf(cls):
-    class List(ListObject, OpenStateObject):
-        entries = fields.List(fields.Object(cls))
-    return List
+class Document(OpenStateObject):
+    url = fields.Field()
+    name = fields.Field()
 
 
 class Bill(OpenStateObject):
@@ -135,11 +150,15 @@ class Bill(OpenStateObject):
     session = fields.Field()
     chamber = fields.Field()
     bill_id = fields.Field()
+    created_at = OpenStateDatetime()
+    updated_at = OpenStateDatetime()
+    alternate_titles = fields.List(fields.Field())
     actions = fields.List(fields.Object(Action))
     sponsors = fields.List(fields.Object(Sponsor))
     votes = fields.List(fields.Object(Vote))
     versions = fields.List(fields.Object(Version))
-    alternate_titles = fields.List(fields.Field())
+    documents = fields.List(fields.Object(Document))
+    sources = fields.List(fields.Object(Source))
 
     @classmethod
     def get(cls, state, session, chamber, bill_id):
@@ -157,7 +176,7 @@ class Bill(OpenStateObject):
         return super(Bill, cls).get(func)
 
     @classmethod
-    def search(cls, query, **kwargs):
+    def search(cls, query=None, **kwargs):
         """
         Search bills.
 
@@ -166,7 +185,8 @@ class Bill(OpenStateObject):
         Any additional keyword arguments will be used to further filter the
         results.
         """
-        kwargs['q'] = query
+        if query:
+            kwargs['q'] = query
         func = 'bills'
         return ListOf(cls).get(func, kwargs).entries
 
@@ -174,10 +194,12 @@ class Bill(OpenStateObject):
         return '%s: %s' % (self.bill_id, self.title)
 
 
+## Legislators
+
 class Role(OpenStateObject):
     state = fields.Field()
     role = fields.Field()
-    session = fields.Field()
+    term = fields.Field()
     chamber = fields.Field()
     district = fields.Field()
     committee = fields.Field()
@@ -187,23 +209,28 @@ class Role(OpenStateObject):
 
     def __str__(self):
         return '%s %s %s district %s' % (self.state, self.chamber,
-                                         self.session, self.district)
+                                         self.term, self.district)
 
 
 class Legislator(OpenStateObject):
+    id = fields.Field()
     leg_id = fields.Field()
     full_name = fields.Field()
     first_name = fields.Field()
     last_name = fields.Field()
     middle_name = fields.Field()
-    suffix = fields.Field()
-    party = fields.Field()
-    roles = fields.List(fields.Object(Role))
+    suffixes = fields.Field()
     votesmart_id = fields.Field()
+    nimsp_candidate_id = fields.Field()
     active = fields.Field()
     chamber = fields.Field()
     district = fields.Field()
+    state = fields.Field()
     party = fields.Field()
+    created_at = OpenStateDatetime()
+    updated_at = OpenStateDatetime()
+    roles = fields.List(fields.Object(Role))
+    sources = fields.List(fields.Object(Source))
 
     @classmethod
     def get(cls, id):
@@ -241,10 +268,13 @@ class Legislator(OpenStateObject):
         return self.full_name
 
 
+## Committees
+
 class CommitteeMember(OpenStateObject):
     leg_id = fields.Field()
     role = fields.Field()
-    name = fields.Field('legislator')
+    name = fields.Field()
+
 
 class Committee(OpenStateObject):
     id = fields.Field()
