@@ -47,6 +47,15 @@ Grab state metadata:
     ...     for session in term.sessions:
     ...         print "Session: %s" % session
     20092010
+    Session: 20092010
+    Session: 20092010 Special Session 1
+    Session: 20092010 Special Session 2
+    Session: 20092010 Special Session 3
+    Session: 20092010 Special Session 4
+    Session: 20092010 Special Session 5
+    Session: 20092010 Special Session 6
+    Session: 20092010 Special Session 7
+    Session: 20092010 Special Session 8
 
 Lookup legislators by name:
 
@@ -54,18 +63,20 @@ Lookup legislators by name:
     >>> for mike in mikes:
     ...     print mike.full_name
     Duvall, Mike D.
-    Davis, Mike
+    Gatto, Mike
     Eng, Mike
+    Davis, Mike
     Feuer, Mike
 
 Lookup legislators by name and party:
 
     >>> dem_mikes = openstates.Legislator.search(state='ca',
-    ... party='Democrat', first_name='Mike')
+    ... party='Democratic', first_name='Mike')
     >>> for mike in dem_mikes:
     ...     print mike.full_name
-    Davis, Mike
+    Gatto, Mike
     Eng, Mike
+    Davis, Mike
     Feuer, Mike
 
 Search bills:
@@ -73,43 +84,43 @@ Search bills:
     >>> bills = openstates.Bill.search('agriculture', state='vt')[0:3]
     >>> for bill in bills:
     ...     print "%s %s %s" % (bill.state, bill.bill_id, bill.title)
-    vt H.0193 AN ACT RELATING TO THE ADDITION OF THE SECRETARY OF AGRICULTURE, FOOD AND MARKETS TO THE BOARD OF TRUSTEES OF THE UNIVERSITY OF VERMONT AND STATE AGRICULTURAL COLLEGE
-    vt S.0132 AN ACT RELATING TO AGRICULTURAL FUNDING EDUCATION AND OUTREACH
+    vt H.0554 AN ACT RELATING TO LEGISLATIVE MEMBERS OF THE BOARD OF TRUSTEES OF THE UNIVERSITY OF VERMONT AND STATE AGRICULTURAL COLLEGE
+    vt H.0566 AN ACT RELATING TO EXISTING AGRICULTURAL METHANE ELECTRIC GENERATION PLANTS
     vt H.0429 AN ACT RELATING TO A TUITION CREDIT FOR STUDENTS IN AGRICULTURAL PROGRAMS
 
 Grab information about a specific bill:
 
     >>> bill = openstates.Bill.get('ca', '20092010', 'lower', 'AB20')
     >>> print bill.title
-    An act to add Chapter 14.27 (commencing with Section 67325) to Part 40 of Division 5 of Title 3 of the Education Code, relating to public postsecondary education.
+    An act to add Article 6 (commencing with Section 92060) to Chapter 1 of Part 57 of Division 9 of Title 3 of the Education Code, relating to the University of California.
+
 
 List a bill's sponsors:
 
     >>> for sponsor in bill.sponsors:
     ...    print sponsor.name
-    Torlakson, Tom
-    Portantino, Anthony
-    Block, Marty
-    Solorio, Jose
+    Solorio
 
 List a bill's actions:
 
     >>> for action in bill.actions[0:3]:
     ...     print action
-    Secretary of State: Chaptered by Secretary of State - Chapter   402, Statutes of 2009.
-    Governor: Approved by the Governor.
-    Governor: Enrolled and to the Governor at   5 p.m.
+    lower (Desk): Read first time.  To print.
+    lower (Desk): From printer.  May be heard in committee  January  1.
+    lower (Committee CX09): Referred to Coms. on  HIGHER ED. and  B. & P.
 
 View a bill's votes:
 
     >>> vote = bill.votes[0]
     >>> print vote.motion
-    Do pass as amended and be re-referred to the Committee on Business and Professions.
+    Do pass, but re-refer to the Committee on Banking, Finance and Insurance.
     >>> print vote.yes_count, vote.no_count, vote.other_count
-    9 0 0
+    6 0 1
 
 Lookup legislators by latitude and longitude:
 
-    >>> legislators = openstates.Legislator.geo(-73.675451, 42.737498)
-    >>> print legislators[0].full_name
-    Roy J. McDonald
+    >>> legislators = openstates.Legislator.geo(35.79154, -78.7811169)
+    >>> for l in legislators:
+    ...     print l.full_name
+    Nelson Dollar
+    Josh Stein
