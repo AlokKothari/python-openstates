@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 from setuptools import setup
-from openstates import __version__
 
 long_description = open('README.rst').read()
 
 setup(name="python-openstates",
-      version=__version__,
+      version='0.4.1',
       py_modules=['openstates'],
       description="Library for interacting with the Open State Project API",
       author="Michael Stephens",

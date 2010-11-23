@@ -7,7 +7,7 @@ information.
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2010 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
@@ -94,6 +94,7 @@ class Action(OpenStateObject):
     date = OpenStateDatetime()
     actor = fields.Field()
     action = fields.Field()
+    type = fields.Field()
 
     def __str__(self):
         return '%s: %s' % (self.actor, self.action)
@@ -106,7 +107,7 @@ class Sponsor(OpenStateObject):
     chamber = fields.Field()
 
     def __str__(self):
-        return self.full_name
+        return self.name
 
 
 class SpecificVote(OpenStateObject):
@@ -198,11 +199,12 @@ class Bill(OpenStateObject):
 
 class Role(OpenStateObject):
     state = fields.Field()
-    role = fields.Field()
+    type = fields.Field()
     term = fields.Field()
     chamber = fields.Field()
     district = fields.Field()
     committee = fields.Field()
+    subcommittee = fields.Field()
     start_date = OpenStateDatetime()
     end_date = OpenStateDatetime()
     party = fields.Field()
