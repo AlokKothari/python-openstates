@@ -221,7 +221,8 @@ class Legislator(OpenStateObject):
     middle_name = fields.Field()
     suffixes = fields.Field()
     votesmart_id = fields.Field()
-    nimsp_candidate_id = fields.Field()
+    nimsp_id = fields.Field()
+    transparencydata_id = fields.Field()
     active = fields.Field()
     chamber = fields.Field()
     district = fields.Field()
@@ -231,6 +232,9 @@ class Legislator(OpenStateObject):
     updated_at = OpenStateDatetime()
     roles = fields.List(fields.Object(Role))
     sources = fields.List(fields.Object(Source))
+
+    # Deprecated
+    nimsp_candidate_id = fields.Field()
 
     @classmethod
     def get(cls, id):
