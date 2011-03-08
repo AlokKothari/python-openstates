@@ -5,9 +5,9 @@ including bill summaries, votes, sponsorships and state legislator
 information.
 """
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
-__copyright__ = "Copyright (c) 2010 Sunlight Labs"
+__copyright__ = "Copyright (c) 2011 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
