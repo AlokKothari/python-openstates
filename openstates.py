@@ -309,3 +309,24 @@ class Committee(OpenStateObject):
         For example, ``openstates.Committee.search(state='ca')``.
         """
         return ListOf(cls).get('committees', kwargs).entries
+
+
+class EventParticipant(OpenStateObject):
+    type = fields.Field()
+    participant = fields.Field()
+
+
+class Event(OpenStateObject):
+    id = fields.Field()
+    state = fields.Field()
+    description = fields.Field()
+    when = OpenStateDatetime()
+    end = OpenStateDatetime()
+    location = fields.Field()
+    type = fields.Field()
+    session = fields.Field()
+    participants = fields.List(fields.Object(EventParticipant))
+
+    @classmethod
+    def search(cls, **kwargs):
+        return ListOf(cls).get('events', kwargs).entries
