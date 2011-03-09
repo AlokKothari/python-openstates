@@ -289,6 +289,7 @@ class Committee(OpenStateObject):
     committee = fields.Field()
     subcommittee = fields.Field()
     members = fields.List(fields.Object(CommitteeMember))
+    sources = fields.List(fields.Object(Source))
 
     @classmethod
     def get(cls, id):
@@ -326,6 +327,7 @@ class Event(OpenStateObject):
     type = fields.Field()
     session = fields.Field()
     participants = fields.List(fields.Object(EventParticipant))
+    sources = fields.List(fields.Object(Source))
 
     @classmethod
     def search(cls, **kwargs):
