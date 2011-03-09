@@ -35,7 +35,7 @@ class OpenStateObject(RemoteObject):
         params['format'] = 'json'
         params['apikey'] = API_KEY
         url = "%s%s/?%s" % (OPENSTATES_URL, func,
-                            urllib.urlencode(params))
+                            urllib.urlencode(params, doseq=True))
         return super(OpenStateObject, cls).get(url)
 
 
