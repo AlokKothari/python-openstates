@@ -7,7 +7,7 @@ information.
 __author__ = "Michael Stephens <mstephens@sunlightfoundation.com>"
 __copyright__ = "Copyright (c) 2011 Sunlight Labs"
 __license__ = "BSD"
-__version__ = "0.4.2"
+__version__ = "0.5.0"
 
 from remoteobjects import RemoteObject, fields, ListObject
 import urllib
@@ -16,9 +16,12 @@ OPENSTATES_URL = "http://openstates.sunlightlabs.com/api/v1/"
 
 API_KEY = ''
 
-# utility classes
 
 class OpenStateDatetime(fields.Datetime):
+    """
+    Decode timestamps of the format '2011-03-10 10:23:34'.
+    Allows value to be None.
+    """
     dateformat = '%Y-%m-%d %H:%M:%S'
 
     # None value for datetimes is fixed in trunk remoteobjects,
@@ -48,9 +51,6 @@ def ListOf(cls):
 class Source(OpenStateObject):
     url = fields.Field()
     retrieved = OpenStateDatetime()
-
-
-## Metadata
 
 
 class Term(OpenStateObject):
@@ -87,8 +87,6 @@ class State(OpenStateObject):
     def __str__(self):
         return self.name
 
-
-## Bills
 
 class Action(OpenStateObject):
     date = OpenStateDatetime()
@@ -139,6 +137,7 @@ class Vote(OpenStateObject):
 class Version(OpenStateObject):
     url = fields.Field()
     name = fields.Field()
+
 
 class Document(OpenStateObject):
     url = fields.Field()
@@ -194,8 +193,6 @@ class Bill(OpenStateObject):
     def __str__(self):
         return '%s: %s' % (self.bill_id, self.title)
 
-
-## Legislators
 
 class Role(OpenStateObject):
     state = fields.Field()
@@ -273,8 +270,6 @@ class Legislator(OpenStateObject):
     def __str__(self):
         return self.full_name
 
-
-## Committees
 
 class CommitteeMember(OpenStateObject):
     leg_id = fields.Field()

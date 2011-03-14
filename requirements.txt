@@ -1,1 +1,1 @@
-remoteobjects
+remoteobjects>=1.1

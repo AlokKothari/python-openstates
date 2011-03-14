@@ -8,7 +8,7 @@ The Open State Project provides data on state legislative activities,
 including bill summaries, votes, sponsorships and state legislator
 information.
 
-python-openstates is a project of Sunlight Labs (c) 2010.
+python-openstates is a project of Sunlight Labs (c) 2011.
 Written by Michael Stephens <mstephens@sunlightfoundation.com>.
 
 Source: http://github.com/sunlightlabs/python-openstates

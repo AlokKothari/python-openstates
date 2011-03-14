@@ -4,7 +4,7 @@ from setuptools import setup
 long_description = open('README.rst').read()
 
 setup(name="python-openstates",
-      version='0.4.2',
+      version='0.5.0',
       py_modules=['openstates'],
       description="Library for interacting with the Open State Project API",
       author="Michael Stephens",
